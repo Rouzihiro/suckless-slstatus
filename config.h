@@ -74,29 +74,29 @@ static const struct arg args[] = {
     /* function,     format,                              argument */
 
     /* Music (Playerctl) */
-    { run_command,  " %s  | ",  "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
+    { run_command,  " %s | ", "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
 
     /* Volume */
-    { run_command,  " %s  | ",  "pamixer --get-volume-human" },
+    { run_command,  " %s | ", "pamixer --get-volume-human" },
 
     /* Memory used (MiB) */
-    { run_command,  " %s  | ",  "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
+    { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
 
     /* CPU temperature */
-    { run_command,  " %s°C  | ", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
+    { run_command,  " %s°C | ", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
 
     /* Disk free (/) */
-    { run_command,  "󰋊 %s  | ",  "df -h / | awk 'NR==2 {print $4}'" },
+    { run_command,  "󰋊 %s | ", "df -h / | awk 'NR==2 {print $4}'" },
 
     /* Network download rate (wlan0) */
-    { run_command,  "󰀂 %s  | ",  "~/.local/bin/bar/bandwith2" },
+    { run_command,  "󰀂 %s | ", "~/.local/bin/bar/bandwith2" },
 
     /* Brightness */
-    { run_command,  "󰃟 %s  | ",  "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
+    { run_command,  "󰃟 %s | ", "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
 
     /* Time (built-in datetime) */
-    { datetime,     " %s  | ",  "%I:%M %p" },
+    { datetime,     " %s | ", "%I:%M %p" },
 
     /* Battery */
-    { run_command,  "%s",    "~/.local/bin/bar/battery2" },
+    { run_command,  "%s",  "~/.local/bin/bar/battery2" },
 };
