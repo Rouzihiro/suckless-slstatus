@@ -64,7 +64,38 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
-static const struct arg args[] = {
+// static const struct arg args[] = {
 	/* function format          argument */
-	{ datetime, "%s",           "%F %T" },
+//	{ datetime, "%s",           "%F %T" },
+// };
+
+static const struct arg args[] = {
+    /* function,     format,                              argument */
+
+    /* Music (Playerctl) */
+    { run_command,  " %s",  "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
+
+    /* Volume */
+    { run_command,  " %s",  "pamixer --get-volume-human" },
+
+    /* Memory used (MiB) */
+    { run_command,  " %s",  "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
+
+    /* CPU temperature */
+    { run_command,  " %s°C", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
+
+    /* Disk free (/) */
+    { run_command,  "󰋊 %s",  "df -h / | awk 'NR==2 {print $4}'" },
+
+    /* Network download rate (wlan0) */
+    { run_command,  "󰀂 %s",  "~/.config/slstatus/netrate.sh" },
+
+    /* Brightness */
+    { run_command,  "󰃟 %s",  "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
+
+    /* Time (built-in datetime) */
+    { datetime,     " %s",  "%I:%M %p" },
+
+    /* Battery */
+    { run_command,  "%s",    "~/.config/slstatus/battery.sh" },
 };
