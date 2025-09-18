@@ -69,34 +69,44 @@ static const char unknown_str[] = "n/a";
 //	{ datetime, "%s",           "%F %T" },
 // };
 
-
 static const struct arg args[] = {
-    /* function,     format,                              argument */
+    /* function,    format,             argument */
 
-    /* Music (Playerctl) */
+    /* Music (Playerctl) – still needs run_command */
     { run_command,  " %s | ", "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
 
-    /* Volume */
+    /* Volume (OTB: vol_perc) */
+    // { vol_perc,     " %s%% | ", NULL },
     { run_command,  " %s | ", "pamixer --get-volume-human" },
 
-    /* Memory used (MiB) */
-    { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
+    /* CPU usage percent (OTB: cpu_perc) */
+    { cpu_perc,     " %s%% | ", NULL },
+    // { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
 
-    /* CPU temperature */
-    { run_command,  " %s°C | ", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
+    /* RAM used (OTB: ram_used) */
+    { ram_used,     " %s | ", NULL },
+    // { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
 
-    /* Disk free (/) */
-    { run_command,  "󰋊 %s | ", "df -h / | awk 'NR==2 {print $4}'" },
+    /* CPU temperature (OTB: temp) */
+    { temp,         " %s°C | ", "/sys/class/thermal/thermal_zone0/temp" },
+    // { run_command,  " %s°C | ", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
 
-    /* Network download rate (wlan0) */
-    { run_command,  "󰀂 %s | ", "~/.local/bin/bar/bandwith2" },
+    /* Disk usage (OTB: disk_perc) */
+    { disk_perc,    " %s%% | ", "/" },
+    // { run_command,  "󰋊 %s | ", "df -h / | awk 'NR==2 {print $4}'" },
 
-    /* Brightness */
+    /* WiFi ESSID (OTB: wifi_essid) */
+    // { wifi_essid,   " %s ", "wlan0" },
+
+    /* WiFi signal strength (OTB: wifi_perc) */
+    { wifi_perc,    " %s%% | ", "wlan0" },
+
+    /* Brightness – still needs run_command */
     { run_command,  "󰃟 %s | ", "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
 
     /* Time (built-in datetime) */
     { datetime,     " %s | ", "%I:%M %p" },
 
-    /* Battery */
+    /* Battery – keep your nicer script */
     { run_command,  "%s",  "~/.local/bin/bar/battery2" },
 };
