@@ -72,8 +72,10 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
     /* function,    format,             argument */
 
+		{ netspeed_rx, " %s | ", "wlan0" },
+
     /* Music (Playerctl) – still needs run_command */
-    { run_command,  " %s | ", "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
+    // { run_command,  " %s | ", "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
 
     /* Volume (OTB: vol_perc) */
     // { vol_perc,     " %s%% | ", NULL },
@@ -81,21 +83,15 @@ static const struct arg args[] = {
 
     /* CPU usage percent (OTB: cpu_perc) */
     { cpu_perc,     " %s%% | ", NULL },
-    // { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
 
     /* RAM used (OTB: ram_used) */
     { ram_used,     " %s | ", NULL },
-    // { run_command,  " %s | ", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {printf \"%dMiB\", (t-a)/1024}' /proc/meminfo" },
 
     /* CPU temperature (OTB: temp) */
     { temp,         " %s°C | ", "/sys/class/thermal/thermal_zone0/temp" },
-    // { run_command,  " %s°C | ", "sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\\+|°C/,\"\",$3); print $3}' | sort -nr | head -n1" },
 
     /* Disk usage (OTB: disk_perc) */
-    { disk_perc,    " %s%% | ", "/" },
-    // { run_command,  "󰋊 %s | ", "df -h / | awk 'NR==2 {print $4}'" },
-
-    /* WiFi ESSID (OTB: wifi_essid) */
+    { disk_free,    " %s | ", "/" },
     // { wifi_essid,   " %s ", "wlan0" },
 
     /* WiFi signal strength (OTB: wifi_perc) */
