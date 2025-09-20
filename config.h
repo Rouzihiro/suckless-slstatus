@@ -72,36 +72,36 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
     /* function,    format,             argument */
 
-		{ netspeed_rx, " %s | ", "wlan0" },
+		{ netspeed_rx, " %s ⟨ ", "wlan0" },
 
     /* Music (Playerctl) – still needs run_command */
     // { run_command,  " %s | ", "playerctl metadata --format '{{ artist }} - {{ title }}' | cut -c -32" },
 
     /* Volume (OTB: vol_perc) */
     // { vol_perc,     " %s%% | ", NULL },
-    { run_command,  " %s | ", "pamixer --get-volume-human" },
+    { run_command,  " %s ⟨ ", "pamixer --get-volume-human" },
 
     /* CPU usage percent (OTB: cpu_perc) */
-    { cpu_perc,     " %s%% | ", NULL },
+    { cpu_perc,     " %s%% ⟨ ", NULL },
 
     /* RAM used (OTB: ram_used) */
-    { ram_used,     " %s | ", NULL },
+    { ram_used,     " %s ⟨ ", NULL },
 
     /* CPU temperature (OTB: temp) */
-    { temp,         " %s°C | ", "/sys/class/thermal/thermal_zone0/temp" },
+    { temp,         " %s°C ⟨ ", "/sys/class/thermal/thermal_zone0/temp" },
 
     /* Disk usage (OTB: disk_perc) */
-    { disk_free,    " %s | ", "/" },
+    { disk_free,    " %s ⟨ ", "/" },
     // { wifi_essid,   " %s ", "wlan0" },
 
     /* WiFi signal strength (OTB: wifi_perc) */
-    { wifi_perc,    " %s%% | ", "wlan0" },
+    { wifi_perc,    " %s%% ⟨ ", "wlan0" },
 
     /* Brightness – still needs run_command */
-    { run_command,  "󰃟 %s | ", "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
+    { run_command,  "󰃟 %s ⟨ ", "brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g'" },
 
     /* Time (built-in datetime) */
-    { datetime,     " %s | ", "%I:%M %p" },
+    { datetime,     " %s ⟨ ", "%I:%M %p" },
 
     /* Battery – keep your nicer script */
     { run_command,  "%s",  "~/.local/bin/bar/battery2" },
